@@ -58,6 +58,10 @@
     ```
     save_model_path = '/path/to/save/model'
     ```
+  * Then, running
+    ```
+    python trainClassifier_CV.py
+    ```
 
 ## Inference steps
  * All default hypter-parameters and paths are defined in 'configurations.py'
