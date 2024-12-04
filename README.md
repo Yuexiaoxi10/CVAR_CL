@@ -78,9 +78,9 @@
   | DIR Stream(CL-DIR) | Multi | checkpoints/NUCLA/Multi/ckpt_dir_cl.pth | 
   | 2 Stream(CL-DIR + CL-CIR) | Multi | checkpoints/NUCLA/Multi/ckpt_2stream_cl.pth | 
 
- * Firstly, replace 'model_path' to your own path
+ * Firstly, replace 'model_path' to your own path and choose the model you want to apply 
     ```
-    model_path = "/path/to/checkpoint/" + "checkpoint_cl-dir.pth"
+    model_path = "/path/to/checkpoint/" + "xxx.pth"
     ```
  * Then, runing
    ```
