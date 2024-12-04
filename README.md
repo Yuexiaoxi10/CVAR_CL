@@ -47,6 +47,7 @@
   | Architecture name | Sampling| Description | Accuracy |
   | --- | --- | ---| --- |
   | DIR | Single | DIR stream only, baseline experiment, classifier is not trained with constrastive learning | 90.1% (reproduced)| 
+  | CL-DIR | Single | DIR strean only, classifier is trained with constrastive learning | 92.7% (reproduced) |
   | CL-DIR | Multi | DIR stream only, classifier is trained with constrastive learning  | 96.6% |
   | CL-DIR + CL-CIR | Multi | 2 stream pipeline, both DIR and CIR stream are trained with constrastive learning | 99.3% |
 
@@ -71,10 +72,11 @@
  * All default hypter-parameters and paths are defined in 'configurations.py'
  * We provided the best checkpoints each of experiment
  
-  | Architecture name |checkpoint path 
-  | --- | --- |
-  | DIR Stream(CL-DIR) | checkpoints/NUCLA/Multi/ckpt_dir_cl.pth | 
-  | 2 Stream(CL-DIR + CL-CIR) | checkpoints/NUCLA/Multi/ckpt_2stream_cl.pth | 
+  | Architecture name | Sampling | checkpoint path 
+  | --- | --- | --- |
+  | DIR Stream(CL-DIR) | Single | checkpoints/NUCLA/Single/ckpt_dir_cl_sin.pth |
+  | DIR Stream(CL-DIR) | Multi | checkpoints/NUCLA/Multi/ckpt_dir_cl.pth | 
+  | 2 Stream(CL-DIR + CL-CIR) | Multi | checkpoints/NUCLA/Multi/ckpt_2stream_cl.pth | 
 
  * Firstly, replace 'model_path' to your own path
     ```
