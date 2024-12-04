@@ -3,12 +3,12 @@
   * This repo is designed to showcase the usage of our pipeline, and all experiments from this repo is based on **N-UCLA dataset**, cross-view experiment with **'setup1'** configuration, and **MULTI-CLIP** sampling strategy
       * Setup1 configuration: training on 'view1, view2', and testing on 'view3'
       * Input data: 2D skeleton, and rgb images 
-  * All pre-trained models and provided checkpoints only support **'setup1'** configuration with **MULTI-CLIP** sampling strategy
+  * All pre-trained models and provided checkpoints only support **'setup1'** configuration with **MULTI-CLIP** and **SINGLE-CLIP** sampling strategy
 
 
 ## Software Requirement
   * python>=3.6
-  * pytorch>=1.13
+  * pytorch>=1.10.1
   
 ## Repo Structure :
   * checkpoints: checkpoints for inference
@@ -24,10 +24,12 @@
   * Created a 'pretrained/NUCLA/setup1/Multi' folder, then download pretrained models and paste them under the folder
   * The Pretrained 2D skeleton based RHS are needed for all training step, please load accordingly
     
-  | Model name | Description| path |
-  | --- | --- | --- |
-  | pretrainedDIR_CL.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi |
-  | pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step | pretrained/NUCLA/setup1/Multi |
+  |Sampling| Model name | Description| path | gumbel threshold|
+  |---| --- | --- | --- | --- |
+  |Single| pretrainedDIR_no_CL.pth | Loading this model to DIR stream for classification without applying contrastive learning step| pretrained/UCLA/setup1/Single | 0.503 |
+  |Single| pretrainedDIR_CL_sin.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Single| 0.503 |
+  |Multi| pretrainedDIR_CL.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi | |
+  |Multi| pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step| pretrained/NUCLA/setup1/Multi | |
   
 
 ## Input Modalities and Dataset Downloading
@@ -42,16 +44,18 @@
 
 ## Experiment Results
   
-  | Architecture name | Description | Accuracy |
-  | --- | --- | --- |
-  | CL-DIR | DIR stream only, classifier is trained with constrastive learning  | 96.6%
-  | CL-DIR + CL-CIR | 2 stream pipeline, both DIR and CIR stream are trained with constrastive learning | 99.3%
+  | Architecture name | Sampling| Description | Accuracy |
+  | --- | --- | ---| --- |
+  | DIR | Single | DIR stream only, baseline experiment, classifier is not trained with constrastive learning | 90.1% (reproduced)| 
+  | CL-DIR | Multi | DIR stream only, classifier is trained with constrastive learning  | 96.6% |
+  | CL-DIR + CL-CIR | Multi | 2 stream pipeline, both DIR and CIR stream are trained with constrastive learning | 99.3% |
 
 ## Training steps
  * All default hypter-parameters and paths are defined in 'configurations.py'
- * Firstly, modify the 'mode' accordingly
+ * Firstly, modify the 'mode' and 'sampling' accordingly
     ```
     mode = 'DIR_CL' for DIR stream only, mode = '2stream_CL' for 2-stream pipeline
+    sampling = 'Single' for single clip, sampling = 'Multi' for multi clips
     ```
 
   * Second, modify the path of saving your models
