@@ -158,120 +158,21 @@ def get_normalized_data(inputData, type):
     return outputData
 
 
-def getOneDimData(input, dim):
-    'input = 3d tensor'
-    'dim = skeleton dim'
-    L = np.arange(0, input.shape[-1], dim)
-
-    output = input[:, :, L]
-
-    return output
-
-def plotting(input, reconstruction,key_frame, imageName, saveDir, seqNum):
-    if seqNum > 1:
-
-        seq1 = input[:, seqNum]
-        seq2 = reconstruction[:, seqNum]
-        y_key = -5 * np.ones(seq1.shape)
-    else:
-        seq1 = input
-        seq2 = reconstruction
-        y_key = -5 * np.ones(seq1.shape)
-
-    y_key[key_frame,:] = seq1[key_frame,:]
-    T = np.arange(0, input.shape[0],1)
-    # plt.plot(T, seq1, 'b', T, seq2, 'r', T, y_key,'g*')
-    plt.plot(T, seq1, 'b', label='gt')
-    plt.plot(T, seq2, 'r', label='recover')
-    plt.plot(T, y_key, 'g*', label='key frames')
-
-    plt.legend()
-    plt.title(imageName)
-    plt.savefig(os.path.join(saveDir, imageName + '.png'))
-
-
-# def loadModel(ckpt_file, T, gpu_id):
-#     loadedcheckpoint = torch.load(ckpt_file, map_location=lambda storage, location: storage)
-#     #loadedcheckpoint = torch.load(ckpt_file)
-#     stateDict = loadedcheckpoint['state_dict']
-#
-#     # load parameters
-#     Dtheta = stateDict['l1.theta']
-#     Drr    = stateDict['l1.rr']
-#     model = OFModel(Drr, Dtheta, T, gpu_id)
-#     model.cuda(gpu_id)
-#
-#     return model
-
-def load_pretrainedModel(stateDict, net):
-
-    new_dict = net.state_dict()
-    stateDict = stateDict
-    pre_dict = {k: v for k, v in stateDict.items() if k in new_dict}
-
-    new_dict.update(pre_dict)
-
-    net.load_state_dict(new_dict)
-    plist = list(net.parameters())
-
-    for i in range(0, len(plist)):
-        p = plist[i]
-        if len(plist) - 3 <= i <= len(plist):
-
-            p.requires_grad = True
-        else:
-            p.requires_grad = False
-
-    return net
 
 def load_pretrainedModel_endtoEnd(stateDict, net):
     new_dict = net.state_dict()
-    stateDict = stateDict
-    pre_dict = {k: v for k, v in stateDict.items() if k in new_dict}
+    stateDict = stateDict['state_dict']
+    pre_dict = {}
+    for k in stateDict.keys():
+        if k in new_dict:
+            v = stateDict[k]
+            pre_dict[k] = v
+    # pre_dict = {k: v for k, v in stateDict.items() if k in new_dict}
 
     new_dict.update(pre_dict)
 
     net.load_state_dict(new_dict)
 
-    return net
-
-# def load_fineTune_model(state_dict, net):
-#     new_dict = net.state_dict()
-#     state_dict = state_dict['state_dict']
-#     exclude_dict = {}
-#     for k, v in state_dict.items():
-#         if 'backbone.Classifier.cls' not in k:
-#             exclude_dict[k] = v
-#
-#         if k == 'backbone.Classifier.cls.6.weight':
-#             k_new = 'backbone.Classifier.cls.0.weight'
-#             exclude_dict[k_new] = v
-#         if k == 'backbone.Classifier.cls.6.bias':
-#             k_new = 'backbone.Classifier.cls.0.bias'
-#             exclude_dict[k_new] = v
-#
-#     # pre_dict = {k: v for k, v in exclude_dict.items() if k in new_dict}
-#     new_dict.update(exclude_dict)
-#     net.load_state_dict(new_dict)
-#
-#     return net
-
-def load_fineTune_model(state_dict,net):
-    new_dict = net.state_dict()
-
-    pre_dict = {k: v for k, v in state_dict.items() if k in new_dict}
-
-    new_dict.update(pre_dict)
-
-    net.load_state_dict(new_dict)
-
-    for p in net.parameters():
-        p.requires_grad = False
-
-    # net.backbone.Classifier.cls[0].weight.requires_grad = True
-    # net.backbone.Classifier.cls[0].bias.requires_grad = True
-    # net.backbone.cls.weight.requires_grad = True
-    # net.backbone.cls.bias.requires_grad = True
     return net
 
 def get_Dictionary(T, numPole, gpu_id, addOne):
@@ -310,84 +211,6 @@ def get_Dictionary(T, numPole, gpu_id, addOne):
 
     return dic
 
-def getNoneZeroDict(Dictionary, Coefficience, seq_num, single):
-    if single:
-        c1 = Coefficience[:, seq_num]
-        c1 = set_to_zeros(c1)
-
-        nonzero_idx = torch.nonzero(c1)
-        # print('coeff:', c1.shape, 'nonzero_idx:', nonzero_idx)
-        C1_nonzero = c1[nonzero_idx]  # [Nx1]
-
-        # print(nonzero_idx)
-        # print(dictionary.shape)
-        Dict_nonzero = Dictionary[:, nonzero_idx].squeeze(2)
-        # Y = torch.matmul(Dict_nonzero, C1_nonzero)
-
-    else:
-        List = torch.nonzero(Coefficience)
-        nonzero_list = torch.unique(List[:, 0])
-
-        Dict_nonzero = Dictionary[:, nonzero_list]
-
-    return Dict_nonzero, C1_nonzero
-
-def get_recover(D, y, key_set):
-    D_r = D[key_set, :]
-    if len(y.shape) == 3:
-        y_r = y[:,key_set, :]
-    else:
-        y_r = y[key_set,:]
-
-    dtd_r = torch.matmul(D_r, D_r.t())
-
-    a = torch.matmul(D_r.t(), torch.inverse(dtd_r))
-    coef_r = torch.matmul(a, y_r)
-
-    y_hat = torch.matmul(D, coef_r)
-
-    return y_hat,coef_r
-
-def get_recover_fista(D, y, key_set, gpu_id):
-    if type(D) is np.ndarray:
-        D = torch.Tensor(D)
-
-    D_r = D[key_set]
-    # print(y.shape, 'is cuda:', y.is_cuda, 'key_set:', key_set)
-    if len(y.shape)==3:
-        y_r = y[:,key_set]
-    else:
-        y_r = y[key_set]
-
-
-    if D.is_cuda:
-        c_r = fista(D_r, y_r, 0.1, 100, gpu_id)  # lambda=0.4 is the best one
-        y_hat = torch.matmul(D, c_r)
-    else:
-        c_r = fista(D_r.cuda(gpu_id), y_r, 0.1, 100, gpu_id)
-        y_hat = torch.matmul(D.cuda(gpu_id), c_r)
-
-    return y_hat,c_r
-
-def get_Cr_CoCr(D, y, key_set):
-    D_r = D[key_set, :]
-    if len(y.shape) == 3:
-        y_r = y[:, key_set, :]
-    else:
-        y_r = y[key_set, :]
-
-    dtd_r = torch.matmul(D_r, D_r.t())
-
-    a = torch.matmul(D_r.t(), torch.inverse(dtd_r))
-    coef_r = torch.matmul(a, y_r).squeeze(0).cpu().numpy()
-
-    cov_cr = np.matmul(np.matmul(coef_r.transpose(),np.cov(coef_r)), coef_r)
-
-    return coef_r, cov_cr
-
-
-
-
 def DrawGaussian(img, pt, sigma):
     tmpSize = int(np.math.ceil(3 * sigma))
     # if math.isnan(float(pt[0] - tmpSize)):
@@ -423,66 +246,6 @@ def Gaussian(sigma):
     return g_inp
   else:
     raise Exception('Gaussian {} Not Implement'.format(sigma))
-
-
-
-# class KroneckerProduct(nn.Module):
-#     """
-#     Class to perform the Kronecker Product inside the Autograd framework.
-#     See: https://en.wikipedia.org/wiki/Kronecker_product
-#     Computes Kronecker Product for matrices A and B, where
-#     A has shape (batch_size, Ar, Ac) and B has shape (batch_size, Br, Bc)
-#     Usage:
-#       * Initialise an instance of this class by specifying the shapes of A and B.
-#       * Call the class on A and B, which calls the forward function.
-#     """
-#
-#     def __init__(self, A_shape, B_shape):
-#         """
-#         Inputs:
-#             A_shape         A tuple of length 2 specifying the shape of A---(Ar, Ac)
-#             B_shape         A tuple of length 2 specifying the shape of B---(Br, Bc)
-#         """
-#
-#         super(KroneckerProduct, self).__init__()
-#
-#         # Extract rows and columns.
-#         Ar, Ac = A_shape
-#         Br, Bc = B_shape
-#
-#         # Output size.
-#         Fr, Fc = Ar * Br, Ac * Bc
-#
-#         # Shape for the left-multiplication matrix
-#         left_mat_shape = (Fr, Ar)
-#         # Shape for the right-multiplication matrix.
-#         right_mat_shape = (Ac, Fc)
-#
-#         # Identity matrices for left and right matrices.
-#         left_eye = torch.eye(Ar)
-#         right_eye = torch.eye(Ac)
-#
-#         # Create left and right multiplication matrices.
-#         self.register_buffer('left_mat', torch.cat([x.view(1, -1).repeat(Br, 1) for x in left_eye], dim=0))
-#         self.register_buffer('right_mat', torch.cat([x.view(-1, 1).repeat(1, Bc) for x in right_eye], dim=1))
-#
-#         # Unsqueeze the batch dimension.
-#         self.left_mat = self.left_mat.unsqueeze(0)
-#         self.right_mat = self.right_mat.unsqueeze(0)
-#
-#         # Function to expand A as required by the Kronecker Product.
-#         self.A_expander = lambda A: torch.bmm(self.left_mat.expand(A.size(0), Fr, Ar),
-#                                               torch.bmm(A, self.right_mat.expand(A.size(0), Ac, Fc)))
-#
-#         # Function to tile B as required by the kronecker product.
-#         self.B_tiler = lambda B: B.repeat(1, Ar, Ac)
-#
-#     def forward(self, A, B):
-#         """
-#         Compute the Kronecker product for A and B.
-#         """
-#         # This operation is a simple elementwise-multiplication of the expanded and tiled matrices.
-#         return self.A_expander(A) * self.B_tiler(B)
 
 
 
