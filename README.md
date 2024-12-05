@@ -3,7 +3,7 @@
   * This repo is designed to showcase the usage of our pipeline, and all experiments from this repo is based on **N-UCLA dataset**, cross-view experiment with **'setup1'** configuration, and **MULTI-CLIP** sampling strategy
       * Setup1 configuration: training on 'view1, view2', and testing on 'view3'
       * Input data: 2D skeleton, and rgb images 
-  * All pre-trained models and provided checkpoints only support **'setup1'** configuration with **MULTI-CLIP** and **SINGLE-CLIP** sampling strategy
+  * All pre-trained models and provided checkpoints only support **'setup1'** configuration with **MULTI-CLIP** sampling strategy
 
 
 ## Software Requirement
