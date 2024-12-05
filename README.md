@@ -29,7 +29,7 @@
   |Single| pretrainedDIR_for_CL.pth | Loading this model to DIR stream for classification without applying contrastive learning step| pretrained/UCLA/setup1/Single | 0.503 |
   |Single| pretrainedDIR_CL_sin.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Single| 0.503 |
   |Multi| pretrainedRHDYAN_for_CL.pth| Loading this model to DIR stream for classification without applying constrastive learning step| pretrained/UCLA/setup1/Multi | 0.501 |
-  |Multi| pretrainedDIR_CL_ep100.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.501 |
+  |Multi| pretrainedDIR_CL_ep100.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.502 |
   |Multi| pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.501 |
   
 
