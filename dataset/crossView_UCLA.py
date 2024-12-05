@@ -97,7 +97,7 @@ class NUCLA_CrossView(Dataset):
 
 
     def __len__(self):
-      return len(self.samples_list)
+      return len(random.sample(self.samples_list,1500))
 
     def get_uniNorm(self, skeleton):
 
