@@ -26,9 +26,9 @@
     
   |Sampling| Model name | Description| Model Path | Gumbel Threshold|
   |---| --- | --- | --- | --- |
-  |Multi| pretrainedRHDYAN_for_CL.pth| Loading this model to DIR stream for classification without applying constrastive learning step| pretrained/UCLA/setup1/Multi | 0.501 |
+  |Multi| pretrainedRHDYAN_for_CL.pth| Loading this model to DIR stream for classification without applying constrastive learning step| pretrained/UCLA/setup1/Multi | 0.505 |
   |Multi| pretrainedDIR_CL_ep100.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.502 |
-  |Multi| pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.501 |
+  |Multi| pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.502 |
   
 
 ## Input Modalities and Dataset Downloading
