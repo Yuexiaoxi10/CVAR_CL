@@ -70,11 +70,11 @@
  * All default hypter-parameters and paths are defined in 'configurations.py'
  * We provided the best checkpoints each of experiment
  
-  | Architecture name | Sampling | checkpoint path 
-  | --- | --- | --- |
-  | DIR Stream(CL-DIR) | Single | checkpoints/NUCLA/Single/ckpt_dir_cl_sin.pth |
-  | DIR Stream(CL-DIR) | Multi | checkpoints/NUCLA/Multi/ckpt_dir_cl.pth | 
-  | 2 Stream(CL-DIR + CL-CIR) | Multi | checkpoints/NUCLA/Multi/ckpt_2stream_cl.pth | 
+  | Architecture name | Sampling | checkpoint path | Usage |
+  | --- | --- | --- | --- | 
+  | DIR Stream(DIR) | Multi | checkpoints/NUCLA/Single/ckpt_dir.pth | for DIR stream only, no constrastive learning step |
+  | DIR Stream(CL-DIR) | Multi | checkpoints/NUCLA/Multi/ckpt_dir_cl.pth | for DIR stream only, with constrastive learning |
+  | 2 Stream(CL-DIR + CL-CIR) | Multi | checkpoints/NUCLA/Multi/ckpt_2stream_cl.pth | for 2Stream, with constrastive learning |
 
  * Firstly, in 'configurations.py', replace 'model_path' to your own path and choose the model you want to apply 
     ```
