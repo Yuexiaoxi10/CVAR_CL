@@ -24,7 +24,7 @@
   * Created a 'pretrained/NUCLA/setup1/Multi' folder, then download pretrained models and paste them under the folder
   * The Pretrained 2D skeleton based RHS are needed for all training step, please load accordingly
     
-  |Sampling| Model name | Description| path | gumbel threshold|
+  |Sampling| Model name | Description| Model Path | Gumbel Threshold|
   |---| --- | --- | --- | --- |
   |Single| pretrainedDIR_for_CL.pth | Loading this model to DIR stream for classification without applying contrastive learning step| pretrained/UCLA/setup1/Single | 0.503 |
   |Single| pretrainedDIR_CL_sin.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Single| 0.503 |
