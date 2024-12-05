@@ -44,9 +44,9 @@
 ## Experiment Results
   
   | Architecture name | Sampling| Description | Accuracy |
-  | --- | --- | ---| --- |
+  | --- | --- | --- | --- |
   | DIR | Multi | DIR stream only, baseline experiment, classifier is not trained with constrastive learning | 92.9% | 
-  | CL-DIR | Multi | DIR stream only, classifier is trained with constrastive learning  | 96.12%(reproduced) |
+  | CL-DIR | Multi | DIR stream only, classifier is trained with constrastive learning  | 96.12 %(reproduced) |
   | CL-DIR + CL-CIR | Multi | 2 stream pipeline, both DIR and CIR stream are trained with constrastive learning | 99.3% |
 
 ## Training steps
