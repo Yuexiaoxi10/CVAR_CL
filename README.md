@@ -26,8 +26,6 @@
     
   |Sampling| Model name | Description| Model Path | Gumbel Threshold|
   |---| --- | --- | --- | --- |
-  |Single| pretrainedDIR_for_CL.pth | Loading this model to DIR stream for classification without applying contrastive learning step| pretrained/UCLA/setup1/Single | 0.503 |
-  |Single| pretrainedDIR_CL_sin.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Single| 0.503 |
   |Multi| pretrainedRHDYAN_for_CL.pth| Loading this model to DIR stream for classification without applying constrastive learning step| pretrained/UCLA/setup1/Multi | 0.501 |
   |Multi| pretrainedDIR_CL_ep100.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.502 |
   |Multi| pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.501 |
@@ -47,8 +45,6 @@
   
   | Architecture name | Sampling| Description | Accuracy |
   | --- | --- | ---| --- |
-  | DIR | Single | DIR stream only, baseline experiment, classifier is not trained with constrastive learning | | 
-  | CL-DIR | Single | DIR strean only, classifier is trained with constrastive learning | |
   | DIR | Multi | DIR stream only, baseline experiment, classifier is not trained with constrastive learning | 92.9% | 
   | CL-DIR | Multi | DIR stream only, classifier is trained with constrastive learning  | 96.12%(reproduced) |
   | CL-DIR + CL-CIR | Multi | 2 stream pipeline, both DIR and CIR stream are trained with constrastive learning | 99.3% |
