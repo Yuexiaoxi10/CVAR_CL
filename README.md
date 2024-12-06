@@ -11,11 +11,11 @@
   * pytorch>=1.10.1
   
 ## Repo Structure :
-  * checkpoints: checkpoints for inference
+  * checkpoints: checkpoints for inference (you will need to download this folder from the google drive link that we shared in the below) 
   * data_list: lists of samples for each view
   * dataset : dataloader
   * modelZoo: model scripts
-  * pretrained: pretrained models before training the final classifier
+  * pretrained: pretrained models before training the final classifier (you will need to download this folder from the google drive link that we shared in the below)
   * trainClassifier_CV.py (training script, cross-view)
   * testClassifier_CV.py (inference script, cross-view)
   * configurations.py (experiment configurations, cross-view)
