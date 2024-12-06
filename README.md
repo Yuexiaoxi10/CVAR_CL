@@ -21,7 +21,6 @@
   * configurations.py (experiment configurations, cross-view)
 
 ## Pretrained Models
-  * Created a 'pretrained/NUCLA/setup1/Multi' folder, then download pretrained models and paste them under the folder
   * The Pretrained 2D skeleton based RHS are needed for all training step, please load accordingly
     
   |Sampling| Model name | Description| Model Path | Gumbel Threshold|
@@ -30,6 +29,9 @@
   |Multi| pretrainedDIR_CL_ep100.pth | Loading this model to DIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.502 |
   |Multi| pretrainedCIR_CL.pth | Loading this model to CIR stream for final classification step| pretrained/NUCLA/setup1/Multi | 0.502 |
   
+## Model Download:
+  * Go to https://drive.google.com/drive/folders/1UTm2twdRtXKJoxx0lqUSlf1y8IYkqSDs?usp=sharing to download our pre-trained models and  best checkpoints for each experiment.
+  * Note: there are two folders, 'pretrained' and 'checkpoints', please download the entire folders and paste to the working directory
 
 ## Input Modalities and Dataset Downloading
   * This repo supports 2D skeletons and rgb images as inputs to the model 
