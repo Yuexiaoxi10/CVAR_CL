@@ -89,7 +89,7 @@
    ```
 
 
-## Versions
+## Other Versions
   * 01: https://github.com/Yuexiaoxi10/Cross_view_actionRecognition
       * This is repo use regular DYAN as sparsecode generator, baseline experiments can be found here. (Experiment configuration is 'setup1', 'single clip')
   * Other datasets and experiments: https://github.com/DanLuoNEU/CVARDIF (Complete pipeline, and 3D input skeleton)
